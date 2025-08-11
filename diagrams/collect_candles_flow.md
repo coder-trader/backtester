@@ -7,47 +7,47 @@ flowchart TD
     A[Start collect_candles] --> B[Load Markets]
     B --> C{Symbol exists?}
     
-    C -->|No| D[Raise ValueError<br/>Symbol not available]
+    C -->|No| D[Raise ValueError: Symbol not available]
     C -->|Yes| E[Check Timeframe]
     
     E --> F{Timeframe valid?}
-    F -->|No| G[Raise ValueError<br/>Timeframe not supported]
+    F -->|No| G[Raise ValueError: Timeframe not supported]
     F -->|Yes| H[Parse Start/End Times]
     
-    H --> I[Initialize Variables<br/>all_candles = []<br/>current_since = since]
+    H --> I[Initialize Variables]
     
     I --> J[Print Collection Info]
-    J --> K[Start Main Loop<br/>while True]
+    J --> K[Start Main Loop]
     
-    K --> L[Fetch OHLCV Data<br/>exchange.fetch_ohlcv]
+    K --> L[Fetch OHLCV Data]
     L --> M{Got candles?}
     
-    M -->|No| N[Break Loop<br/>No more data]
-    M -->|Yes| O[Filter by End Time<br/>if until specified]
+    M -->|No| N[Break Loop: No more data]
+    M -->|Yes| O[Filter by End Time]
     
-    O --> P[Add to all_candles<br/>extend candles]
-    P --> Q[Print Progress<br/>Fetched X candles]
+    O --> P[Add to all_candles]
+    P --> Q[Print Progress]
     
     Q --> R{Reached end time?}
-    R -->|Yes| S[Break Loop<br/>End time reached]
+    R -->|Yes| S[Break Loop: End time reached]
     R -->|No| T{Got full limit?}
     
-    T -->|No| U[Break Loop<br/>No more data available]
-    T -->|Yes| V[Update current_since<br/>last_timestamp + 1]
+    T -->|No| U[Break Loop: No more data available]
+    T -->|Yes| V[Update current_since]
     
-    V --> W[Rate Limiting<br/>sleep rateLimit]
+    V --> W[Rate Limiting Sleep]
     W --> K
     
     N --> X{Any candles collected?}
     S --> X
     U --> X
     
-    X -->|No| Y[Return Empty DataFrame<br/>print No candle data retrieved]
-    X -->|Yes| Z[Create DataFrame<br/>columns: timestamp, OHLCV]
+    X -->|No| Y[Return Empty DataFrame]
+    X -->|Yes| Z[Create DataFrame]
     
-    Z --> AA[Convert Timestamps<br/>ms to datetime UTC]
-    AA --> BB[Remove Duplicates<br/>Sort by timestamp]
-    BB --> CC[Print Success Info<br/>Count and date range]
+    Z --> AA[Convert Timestamps]
+    AA --> BB[Remove Duplicates and Sort]
+    BB --> CC[Print Success Info]
     CC --> DD[Return DataFrame]
     
     Y --> EE[End]
@@ -59,13 +59,13 @@ flowchart TD
     L -.->|Exception| FF[Print Error and Raise]
     FF --> EE
     
-    %% Styling
-    classDef startEnd fill:#e1f5fe,stroke:#01579b,stroke-width:2px
-    classDef process fill:#e8f5e8,stroke:#2e7d32,stroke-width:2px
-    classDef decision fill:#fff3e0,stroke:#ef6c00,stroke-width:2px
-    classDef error fill:#ffebee,stroke:#c62828,stroke-width:2px
-    classDef data fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
-    classDef loop fill:#e0f2f1,stroke:#00695c,stroke-width:2px
+    %% Styling with better contrast and readability
+    classDef startEnd fill:#1e3a8a,stroke:#1e40af,stroke-width:3px,color:#ffffff
+    classDef process fill:#059669,stroke:#047857,stroke-width:2px,color:#ffffff
+    classDef decision fill:#d97706,stroke:#b45309,stroke-width:2px,color:#ffffff
+    classDef error fill:#dc2626,stroke:#b91c1c,stroke-width:3px,color:#ffffff
+    classDef data fill:#7c3aed,stroke:#6d28d9,stroke-width:2px,color:#ffffff
+    classDef loop fill:#0891b2,stroke:#0e7490,stroke-width:2px,color:#ffffff
     
     class A,EE startEnd
     class B,H,I,J,L,O,P,Q,V,W,Z,AA,BB,CC process
