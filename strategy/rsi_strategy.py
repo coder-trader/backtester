@@ -10,7 +10,7 @@ class RSIStrategy(StrategyBase):
         oversold_threshold: float = 80.0,
         overbought_threshold: float = 20.0,
         take_profit_pct: float = 0.7,
-        stop_loss_pct: float = 0.3,
+        stop_loss_pct: float = 0.2,
     ):
         super().__init__(initial_capital)
         self.oversold_threshold = oversold_threshold
