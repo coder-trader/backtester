@@ -1,0 +1,48 @@
+graph TB
+    subgraph "Data Collection"
+        A[CCXT Library] --> B[CandleDataCollector]
+        B --> C[Exchange APIs<br/>Binance, Coinbase, etc.]
+        B --> D[CSV Files<br/>OHLCV Data]
+    end
+    
+    subgraph "Strategy System"
+        E[StrategyBase<br/>Abstract Class] --> F[RSIStrategy<br/>Example Implementation]
+        E --> G[Custom Strategies<br/>User Defined]
+        F --> H[Risk Management<br/>Take Profit/Stop Loss]
+        G --> H
+    end
+    
+    subgraph "Backtesting Engine"
+        I[Backtester Class] --> J[Data Loading<br/>& Validation]
+        J --> K[Technical Indicators<br/>TA-Lib Integration]
+        K --> L[Strategy Execution<br/>Signal Processing]
+        L --> M[Trade Management<br/>Position Tracking]
+        M --> N[Performance Metrics<br/>BacktestResults]
+    end
+    
+    subgraph "User Interface"
+        O[Typer CLI] --> P[Strategy Autocomplete]
+        O --> Q[Data File Autocomplete]
+        O --> R[Rich Tables & Charts]
+        S[Makefile Commands] --> T[Easy Data Collection]
+    end
+    
+    %% Data Flow
+    D --> J
+    H --> L
+    N --> R
+    
+    %% User Interactions
+    O --> I
+    S --> B
+    
+    %% Styling
+    classDef dataCollection fill:#e1f5fe
+    classDef strategy fill:#f3e5f5
+    classDef backtesting fill:#e8f5e8
+    classDef interface fill:#fff3e0
+    
+    class A,B,C,D dataCollection
+    class E,F,G,H strategy
+    class I,J,K,L,M,N backtesting
+    class O,P,Q,R,S,T interface
